@@ -1,0 +1,98 @@
+{
+  "img_url": "img/icons/vault_sm.png",
+  "form": ["area", "level", "name", "age", {
+    "key": "description",
+    "type": "textarea"
+  }, {
+    "key": "thumb",
+    "type": "file"
+  }, {
+    "key": "video",
+    "type": "url"
+  }, {
+    "type": "actions",
+    "items": [{
+      "type": "submit",
+      "title": "Submit"
+    }]
+  }],
+  "display": {
+    "labels": {
+      "area": [{
+        "id": "rails",
+        "name": "Rail Techniques",
+        "default": "img/icons/rails_sm.png"
+      }, {
+        "id": "vaults",
+        "name": "Vault Techniques",
+        "default": "img/icons/vault_sm.png"
+      }, {
+        "id": "walls",
+        "name": "Wall Techniques",
+        "default": "img/icons/walls_sm.png"
+      }, {
+        "id": "misc",
+        "name": "Miscellaneous Techniques",
+        "default": "img/icons/PK_misc_sm.png"
+      }, {
+        "id": "strength",
+        "name": "Strength & Conditioning",
+        "default": "img/icons/workouts_sm.png"
+      }],
+      "level": [{
+        "id": "white",
+        "name": "White Band",
+        "default": "img/icons/rails_sm.png"
+      }, {
+        "id": "green",
+        "name": "Green Band",
+        "default": "img/icons/greenband-300x86.png"
+      }, {
+        "id": "red",
+        "name": "Red Band",
+        "default": "img/icons/redband-300x90.png"
+      }, {
+        "id": "black",
+        "name": "Black Band",
+        "default": "img/icons/walls_sm.png"
+      }]
+    }
+  },
+  "schema": {
+    "area": {
+      "enum": ["rails", "walls", "vaults", "misc", "strenth"],
+      "type": "string",
+      "title": "Skill Area",
+      "default": "vaults",
+      "required": true
+    },
+    "level": {
+      "enum": ["white", "green", "red", "black"],
+      "type": "string",
+      "title": "Required For"
+    },
+    "age": {
+      "enum": ["all", "standard", "limited"],
+      "default": "all",
+      "type": "string",
+      "title": "Ages"
+    },
+    "name": {
+      "type": "string",
+      "title": "Skill Name",
+      "required": true
+    },
+    "thumb": {
+      "type": "object",
+      "title": "Skill Thumbnail Image"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "video": {
+      "type": "string",
+      "title": "Link to Skill video"
+    }
+  }
+}

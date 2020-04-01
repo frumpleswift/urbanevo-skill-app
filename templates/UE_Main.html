@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Urban Evolution Parkour</title>
+        <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+                    <link rel="stylesheet" type="text/css" href="/static/css/UE_Style.css">
+
+
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+            <nav class="navbar navbar-expand-sm bg-white navbar-light fixed-top bgOffWhite">
+                <a href="/"><img class="navImg img-responsive" src="/static/img/icons/logo.png"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav">
+
+     		    	<li class ="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+
+    			<li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Areas</div>
+                                <br>
+                            <div class="dropdown-menu dropdown-menu-center">
+                                <a class="dropdown-item" href="/skill/parkour/green">Parkour</a>
+                                <a class="dropdown-item" href="/skill/silks/lv1">Aerial Silks</a>
+                                <a class="dropdown-item" href="#">Freerunning</a>
+                                <a class="dropdown-item" href="#">Workouts</a>
+
+
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle" data-toggle="dropdown">Schedules</div>
+                            <div class="dropdown-menu dropdown-menu-center">
+                              <a class="dropdown-item" href="/schedule/alexandria">Alexandria</a>
+                              <a class="dropdown-item" href="/schedule/sterling">Sterling</a>
+                            </div>
+                        </li>
+                        {% if session['logged_in'] %}
+                          {% if session['admin'] %}
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Manage</div>
+                                <br>
+                            <div class="dropdown-menu dropdown-menu-center">
+                              {% for schema in schemas %}
+                              <a class="dropdown-item" href="/manage/parkour">Manage Parkour</a>
+                              <a class="dropdown-item" href="/manage/silks">Manage Silks</a>
+                              {% endfor %}
+
+                            </div>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+				<div class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"><img class="avatar" src="/static/img/icons/avatar.png"/></div>
+                          <div class="dropdown-menu dropdown-menu-right">
+
+				                        <a class="dropdown-item" href="#">{{session['email']}}</a>
+                              <a class="dropdown-item" href="#">Profile</a>
+                              <a class="dropdown-item" href="/logout">Logout</a>
+
+
+                          </div>
+                        </li>
+                  			{% else %}
+                                          	<li class="nav-item">
+                  	                          <a class="nav-link" href="/login">Login</a>
+                                            </li>
+                  			{% endif %}
+                    </ul>
+                </div>
+            </nav>
+            </div>
+          </div>
+          <div class="footer">
+              <p>Contact us at helpdesk@urbanevo.com</p>
+            </div>
+          <div class="container-fluid skillHeader">
+            <br />
+            <h2> News and Events feed goes here</h2>
+	    <div>{{message}}</div>
+            <script>
+    window.intercomSettings = {
+      app_id: "hyldxpu0"
+    };
+  </script>
+  <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/hyldxpu0';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+
+</div>
+
+
+    </body>
+</html>

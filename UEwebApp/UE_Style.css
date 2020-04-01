@@ -1,0 +1,275 @@
+
+
+.fakeCheck {
+    height: 20px;
+    width: 20px;
+    background-color: green;
+}
+.bgOffWhite {
+  background-color: #f5f5f5 !important;
+}
+
+.bgWhite {
+  background-color: #ffffff !important;
+}
+
+.fakeX {
+    height:20px;
+    width: 20px;
+    background-color:red;
+}
+
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  width: 50%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    overflow:hidden;
+    background-color: #f5f5f5;
+    font-family: "marker-felt", fantasy, serif;
+}
+
+p {
+    font-size: 0.45rem;
+    font-family: "marker-felt", fantasy, serif;
+}
+
+h4 {
+    font-size: 1.0rem;
+    font-family: "marker-felt", fantasy, serif;
+}
+h3 {
+  font-size: 1.2rem;
+  font-family: "marker-felt", fantasy, serif;
+}
+
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: hsl(0, 70%, 50%);
+    color: white;
+    text-align: center;
+}
+
+.navImg {
+    width: 80px;
+    border:0;
+}
+
+.nav-link {
+    font-size: 0.8rem !important;
+}
+
+.navRed {
+    color: hsl(0,70%,50%) !important;
+}
+
+.navbar-nav {
+    display:table;
+    width:100%;
+    margin: 0;
+}
+
+.scroll-area {
+    width:100%;
+    height: 60vh;
+    overflow-y:scroll;
+}
+
+.formScroll {
+  width: 100%;
+  max-height: 95vh;
+  overflow-y: scroll;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+
+
+}
+
+.btn-primary {
+  background-color: hsl(0, 70%, 50%) !important;
+  border-radius: 5px;
+  width:40%;
+  color: white;
+  padding: 5px;
+  border:none !important;
+}
+
+.visibleSmall {
+
+}
+.visibleLarge {
+
+}
+
+.navbar-nav > li {
+    float:none;
+    display:table-cell;
+    text-align:center;
+}
+
+div.skillHeader {
+    border:none;
+    margin-top: 150px;
+
+}
+
+.buttonLogin {
+  background-color: hsl(0, 70%, 50%);
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px #888888;
+  width:100%;
+  color: white;
+  padding: 5px;
+}
+.buttonLogin:hover {
+  background-color: hsl(0, 50%, 50%);
+
+}
+
+
+.menuImage {
+  max-width: 65px;
+  width: 65px;
+  opacity: 0.7;
+  display: inline-block;
+  margin-top: 10px;
+  color: #600000;
+}
+.menuText {
+  display:inline-block;
+  font-size: 1.2rem;
+}
+
+.hoverCol:hover {
+  background-color: hsl(0, 25%, 85%);
+}
+
+.skillImage {
+    max-width:50px;
+    width:50px;
+
+}
+.login {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.bandImage {
+    width:80px;
+}
+
+.skill {
+    display: inline-block;
+}
+
+.skillContainer {
+    margin: 0px;
+    max-width: 700px;
+    margin-left: -16px;
+}
+.skillContainer:hover {
+    background-color: hsl(0, 25%, 85%);
+}
+
+
+.skillCard {
+    width: 100%;
+}
+
+.panel-collapse {
+  background-color: #ffffff;
+}
+
+
+
+@media (max-width: 349.8px) {
+    .visibleLarge {display:none;}
+    div.skillHeader {margin-top:65px;}
+    .fakeCheck {height:10px;
+        width:10px;}
+    .fakeX {height:10px; width:10px;}
+
+}
+
+@media (min-width: 350px) and (max-width: 760px) {
+    div.skillHeader {margin-top: 75px;}
+    h4 {font-size: 1.1rem;}
+    .navImg{width: 100px;}
+    .bandImage {width: 100px;}
+    .fakeCheck {height: 10px; width:10px;}
+    .fakeX {height:10px; width:10px;}
+    p {font-size:0.7rem;}
+}
+
+@media (min-width: 760.2px) and (max-width: 991.98px) {
+    div.skillHeader {margin-top:135px;}
+    .nav-link{font-size: 1.0rem !important;}
+    p {font-size: 0.9rem;}
+    .skillImage {max-width:60px;
+                width:60px;
+    }
+    h4 {font-size: 1.2rem;}
+    .navImg{width:200px}
+    .bandImage {width: 120px;}
+    .panel-body{display:none;}
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    div.skillHeader {margin-top: 170px}
+    .nav-link{font-size: 1.4rem !important;}
+    p {font-size: 1.2rem;}
+    .skillImage {
+        max-width: 65px;
+        width: 65px;
+    }
+    h4 {font-size: 1.4rem;}
+    .navImg {width:250px;}
+    .bandImage {width: 140px;}
+    .panel-body {display:none;}
+}
+
+@media (min-width: 1200px) {
+    div.skillHeader {margin-top:200px;}
+    .nav-link{font-size:1.6rem !important;}
+    p {font-size: 1.4rem;}
+    .skillImage {
+        max-width: 75px;
+        width: 75px;
+    }
+    h4{font-size: 1.6rem;}
+    .navImg {width:300px;}
+    .bandImage {width: 160px;}
+    .panel-body{display:none;}
+}
+
+
+
+
+@media screen and (min-height:650px) and (max-height:950px) and (orientation:portrait)
+{
+    .scroll-area {height:74vh;}
+     .visibleLarge {display:none;}
+}
+
+@media screen and (min-height:951px)  and (max-height: 1100px) and (orientation:portrait)
+{
+    .scroll-area {height:75vh;}
+}
+@media screen and (min-height:1100.2px) and (orientation:portrait)
+{
+    .scroll-area {height:80vh;}
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Urban Evolution</title>
+        <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+                    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.496.0.min.js"></script>
+                    <link rel="stylesheet" type="text/css" href="css/UE_Style.css">
+                    <script src="js/skillapp.js"></script>
+                    <script src="js/skill-app-auth.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+            <nav class="navbar navbar-expand-sm bg-white navbar-light fixed-top bgOffWhite">
+                <a href="UrbanEvo.html"><img class="navImg img-responsive" src="img/icons/logo.png"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link navRed" href="#">About Us</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle navRed" href="#" id="navbardrop" data-toggle="dropdown">Classes</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="skills.html?skill=parkour">Parkour</a>
+                                <a class="dropdown-item" href="#">Aerial Silks</a>
+                                <a class="dropdown-item" href="#">Adult Gymnastics</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle navRed" href="#" id="scheduleDrop" data-toggle="dropdown">Schedules</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href = "#">Alexandria, VA</a>
+                                <a class="dropdown-item" href="#">Sterling, VA</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link navRed" href="#">Parties</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link navRed" id="loginlink">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            </div>
+            </div>
+            <div class="container-fluid skillHeader">
+              <div class="row">
+                <div class="col-md-2 hoverCol">
+                  <a href="#"><img class="img-responsive menuImage centered" src="img/icons/logo.png">
+                    <h3 class="menuText">News</h3></a>
+                </div>
+                <div class="col-md-2 hoverCol">
+                  <a href="skills.html?skill=parkour"><img class="img-responsive menuImage centered" src="img/icons/vault_sm.png">
+                    <h3 class="menuText">Parkour</h3></a>
+                </div>
+                <div class="col-md-2 hoverCol">
+                  <a href="skills.html?skill=silks"><img class="img-responsive menuImage" src="img/icons/silks_trSm.png">
+                    <h3 class="menuText">Aerial Silks</h3></a>
+                </div>
+                <div class="col-md-2 hoverCol">
+                  <a href="skills.html?skill=gymnastics"><img class="img-responsive menuImage" src="img/icons/gymnastics.png">
+                    <h3 class="menuText">Gymnastics</h3></a>
+                </div>
+                <!--
+                <div class="col-md-2 hoverCol">
+                  <a href="#"><img class="img-responsive menuImage" src="img/icons/workouts_sm.png">
+                    <h3 class="menuText">Workouts</h3></a>
+                </div>
+                <div class="col-md-2 hoverCol">
+                  <a href="#"><img class="img-responsive menuImage" src="img/icons/birthday_sm.png">
+                    <h3 class="menuText">Parties</h3></a>
+                </div>
+              -->
+              </div>
+            </div>
+
+
+            <div class="footer">
+                <p>Contact us at helpdesk@urbanevo.com</p>
+            </div>
+            <script>
+
+            </script>
+    </body>
+</html>

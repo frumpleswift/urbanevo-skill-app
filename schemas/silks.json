@@ -1,0 +1,76 @@
+{
+  "img_url": "img/icons/silks_trSm.png",
+  "form": ["area", "level", "name", {
+    "key": "description",
+    "type": "textarea"
+  }, {
+    "key": "thumb",
+    "type": "file"
+  }, {
+    "key": "video",
+    "type": "url"
+  }, {
+    "type": "actions",
+    "items": [{
+      "type": "submit",
+      "title": "Submit"
+    }]
+  }],
+  "display": {
+    "labels": {
+      "area": [{
+        "id": "inversions",
+        "name": "Inversion Techniques",
+        "default": "img/icons/silks_trSm.png"
+      }, {
+        "id": "locks",
+        "name": "Foot and Wrist Locks",
+        "default": "img/icons/silks_trSm.png"
+      }, {
+        "id": "strength",
+        "name": "Strength Techniques",
+        "default": "img/icons/walls_sm.png"
+      }],
+      "level": [{
+        "id": "level1",
+        "name": "Level 1",
+        "default": "img/icons/rails_sm.png"
+      }, {
+        "id": "level2",
+        "name": "Level 2",
+        "default": "img/icons/greenband-300x86.png"
+      }]
+    }
+  },
+  "schema": {
+    "area": {
+      "enum": ["inversions", "locks", "strenth"],
+      "type": "string",
+      "title": "Skill Area",
+      "default": "inversions",
+      "required": true
+    },
+    "level": {
+      "enum": ["level1", "level2"],
+      "type": "string",
+      "title": "Required For"
+    },
+    "name": {
+      "type": "string",
+      "title": "Skill Name",
+      "required": true
+    },
+    "thumb": {
+      "type": "object",
+      "title": "Skill Thumbnail Image"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "video": {
+      "type": "string",
+      "title": "Link to Skill video"
+    }
+  }
+}

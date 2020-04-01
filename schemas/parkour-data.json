@@ -1,0 +1,86 @@
+{
+      "rails": [{
+          "id": "railwalk",
+          "name": "Rail Walking",
+          "level": "Green Band Rail Skill",
+          "thumb": "img/railWalk.png",
+          "age": "all",
+          "description": "Walk 20 feet on a rail",
+          "video": "kaf836Tp5xw"
+        },
+        {
+          "id": "reverseUnderbar",
+          "name": "Reverse Underbar",
+          "level": "Green Band Rail Skill",
+          "thumb": "img/revUnder.png",
+          "age": "all",
+          "description": "head height bar",
+          "video": "ME4mqekXRgM"
+        },
+        {
+          "id": "sloth",
+          "name": "Sloth Traverse",
+          "level": "Green Band Rail Skill",
+          "thumb": "img/SlothTraverse.png",
+          "age": "all",
+          "description": "traverse 20'",
+          "video": "81mJtXn2TW0"
+        },
+        {
+          "id": "railPre",
+          "name": "Rail Precision Jump",
+          "level": "Green Band Rail Skill",
+          "thumb": "",
+          "age": "young",
+          "description": "Jump from one rail to another 5' away",
+          "video": "tk6ykrl-z1A"
+        }
+      ],
+      "vaults": [{
+          "id": "easy",
+          "name": "Easy Vault",
+          "level": "Green Band Vault Skill",
+          "thumb": "img/Easy.png",
+          "age": "all",
+          "description": "Examinee chooses box height",
+          "video": "_wNZywgG3Lg"
+        },
+        {
+          "id": "lazy",
+          "name": "Lazy Vault",
+          "level": "Green Band Vault Skill",
+          "thumb": "img/Lazy.png",
+          "age": "all",
+          "description": "Examinee chooses box height. Testers choose exit angle",
+          "video": "p99LYXh8nS0"
+        },
+        {
+          "id": "speed",
+          "name": "Speed Vault",
+          "level": "Green Band Vault Skill",
+          "thumb": "img/Speed.png",
+          "age": "all",
+          "description": "Examinee chooses box height",
+          "video": "QBie87x3-pI"
+        },
+        {
+          "id": "pop",
+          "name": "Pop Vault",
+          "level": "Green Band Vault Skill",
+          "thumb": "",
+          "age": "all",
+          "description": "4 foot high box",
+          "video": "P1cYi7JJt6w"
+        },
+        {
+          "id": "kong",
+          "name": "Kong Vault",
+          "level": "Green Band Vault Skill",
+          "thumb": "img/Kong.png",
+          "age": "young",
+          "description": "Examinee chooses box height",
+          "video": "PCBTOz2q5Ls"
+        }
+
+      ]
+    }

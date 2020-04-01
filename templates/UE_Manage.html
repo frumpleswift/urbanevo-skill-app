@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Management portal</title>
+        <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+                    <link rel="stylesheet" type="text/css" href="/static/css/UE_Style.css">
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script>
+    var tech = "all";
+    var age="all";
+    var jsonData= [];
+
+    var area="parkour"
+    var lev="all"
+
+    var skills = [{"id": "rails", "name": "Rail Techniques", "default": "rails_sm.png"}, {"id": "vaults", "name": "Vault Techniques", "default": "vault_sm.png"},{"id": "walls", "name": "Wall Techniques", "default": "walls_sm.png"}, {"id": "strength", "name": "Strength and Conditioning", "default": "workouts_sm.png"}, {"id": "misc", "name": "Misc Techniques", "default": "PK_misc_sm.png"}];
+    var levels = [{"id": "white", "name": "White Band"}, {"id": "green", "name":"Green Band"}, {"id": "red", "name": "Red Band"}, {"id": "black", "name":"Black Band"}];
+    keys=Object.keys(jsonData);
+
+
+    function skillDrop() {
+      addme = '<li class="techniques" value="all">All Skills</li>'
+      $("#skillDropdown").append(addme);
+      for (var i=0;i<skills.length; i++)
+      {
+        skillVal = skills[i].id;
+        skillName = skills[i].name;
+        addme = '<li class="techniques" value=' + skillVal + '>'+skillName + '</li>'
+        $("#skillDropdown").append(addme);
+      };
+
+
+    };
+
+    function levelDrop() {
+      for (var i=0; i<levels.length; i++) {
+        levelName = levels[i].name;
+        levelRedirect="/skill/" + area + "/" + levels[i].id;
+        addme = '<a class="dropdown-item" href="' + levelRedirect + '">' + levelName + '</a>';
+        $("#levelArea").append(addme);
+      };
+    };
+
+    function levelFilter() {
+      addme = '<li class="levels" value="all">All Levels</li>'
+      $("#levelFilter").append(addme);
+      for (var i=0; i<levels.length; i++) {
+        levelName = levels[i].name;
+        levelVal=levels[i].id;
+        addme = '<li class="levels" value=' + levelVal + '>'+levelName + '</li>';
+        $("#levelFilter").append(addme);
+      };
+    };
+
+    function createSkillArea(element){
+      var myNode = document.getElementById("SkillArea");
+      while (myNode.lastChild) {
+        myNode.removeChild(myNode.lastChild);
+        };
+        for (var i=0; i < skills.length; i++) {
+
+          if ((element=="all") || (skills[i].id == element)) {
+
+            itemID = skills[i].id;
+            itemName = skills[i].name;
+            addme = '<h4><i><b>' + itemName + '</b></i></h4>'
+            + '<div class="panel-group" id='+ itemID +'></div>'
+            $("#SkillArea").append(addme);
+          };
+        };
+        $("#SkillArea").append('<br /><br />')
+      };
+
+    function populate(element,ages, lev) {
+        for (var i=0; i<jsonData.length; i++){
+            item = jsonData[i];
+            itemArea = item.area;
+            itemAge = item.age;
+            itemLevel = item.level;
+            if ((element == "all") || (element == itemArea)) {
+              if ((lev=="all") || (itemLevel== lev)) {
+                if ((ages=="all") || (itemAge == ages) || (itemAge=="all")) {
+                var ithumb=item.thumb;
+                if (item.thumb == "") {
+                    for (var j=0; j<skills.length; j++) {
+                        if (item.area == skills[j].id) {
+                        ithumb="/static/img/icons/" + skills[j].default;}
+                    }};
+                var collapseID = "collapse" + item.id;
+                var hrefCol="#" + collapseID;
+
+
+                addme = '<div class="panel panel-default">'
+                + '<div class="panel-heading">'
+                + '<p class="panel-title">'
+
+                + '<div class="container-fluid" id=' + item.id + '>'
+
+                    + '<div class="skill">' + item.name + '&emsp;</div>'
+                    +'<i class="fa fa-trash fa-lg trashIcon" data-toggle="modal" data-target="#delModal" style="float:right" id="trash"' + item.id + '></i>'
+                    +'<i class="fa fa-edit fa-lg editIcon" style="float:right" id="edit"' + item.id + '>&emsp;</i>'
+                    + '</div>'
+
+                    +'</p>'
+                    +'</div>'
+                    +'</div>';
+                    $("#"+itemArea).append(addme);
+        };
+      };
+      };
+    };
+
+        
+      $(".editIcon").click(function(){
+        //edit skill
+      });
+    };
+
+    function changeCard(skillID){
+      for (var i=0; i<skills.length;i++) {
+        for (var j=0; j<jsonData.length; j++) {
+          if (jsonData[j].id == skillID) {
+            itemDesc = jsonData[j].description;
+            itemVid = "https://www.youtube.com/embed/"+(jsonData[j].video).slice(32);
+            itemTitle= jsonData[j].name;
+          $("#cardTitle").text(itemTitle);
+          $("#cardText").text(itemDesc);
+          $("#cardVideo").attr('src', itemVid);
+        };
+      };
+    };
+  };
+    </script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+            <nav class="navbar navbar-expand-sm bg-white navbar-light fixed-top bgOffWhite">
+                <a href="/"><img class="navImg img-responsive" src="/static/img/icons/logo.png"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav">
+			<!--
+     		    	<li class ="nav-item">
+                            <a class="nav-link" href="#">About Parkour</a>
+                        </li>
+			-->  			<li class="nav-item dropdown">
+                                <div class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Areas</div>
+                                    <br>
+                                <div class="dropdown-menu dropdown-menu-center">
+                                    <a class="dropdown-item" href="/skill/parkour/green">Parkour</a>
+                                    <a class="dropdown-item" href="/skill/silks/lv1">Aerial Silks</a>
+                                    <a class="dropdown-item" href="#">Freerunning</a>
+                                    <a class="dropdown-item" href="#">Workouts</a>
+
+
+                                </div>
+                            </li>
+    			<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Level Up</a>
+                                <br>
+                            <div class="dropdown-menu dropdown-menu-center">
+                              <div id="levelArea">
+                              </div>
+
+                            </div>
+                        </li>
+			<!--
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Events</a>
+                        </li>
+			-->
+                      <li class="nav-item dropdown">
+                          <div class="nav-link dropdown-toggle" data-toggle="dropdown">Schedules</div>
+                          <div class="dropdown-menu dropdown-menu-center">
+                            <a class="dropdown-item" href="/schedule/alexandria">Alexandria</a>
+                            <a class="dropdown-item" href="/schedule/sterling">Sterling</a>
+                          </div>
+                        </li>
+                        {% if session['logged_in'] %}
+                          {% if session['admin'] %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Manage</a>
+                                <br>
+                            <div class="dropdown-menu dropdown-menu-center">
+                              {% for schema in schemas %}
+                                <a class="dropdown-item" href="/form/{{schema["recordtype"]}}/new">Add {{schema["recordtype"]}} skill</a>
+                              {% endfor %}
+
+                            </div>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"><img src="/static/img/icons/avatar.png" class="avatar"/></a>
+                          <div class="dropdown-menu dropdown-menu-right">
+
+				  <a class="dropdown-item" href="#">{{session['email']}}</a>
+                              <a class="dropdown-item" href="#">Profile</a>
+                              <a class="dropdown-item" href="/logout">Logout</a>
+
+
+                          </div>
+                        </li>
+                  			{% else %}
+                                          	<li class="nav-item">
+                  	                          <a class="nav-link" href="/login">Login</a>
+                                            </li>
+                  			{% endif %}
+                    </ul>
+                </div>
+            </nav>
+            </div>
+          </div>
+          <div class="container-fluid skillHeader">
+            <div class="row" style="margin-left:-20px">
+
+         <div class="col-4">
+             <div class="dropdown menuButton">
+                <button class="btn dropdown-toggle menuButton" type="button" data-toggle="dropdown">Skills
+                    <span class="caret"></span></button>
+                     <ul class="dropdown-menu">
+                       <div id="skillDropdown">
+
+                       </div>
+                     </ul>
+             </div>
+        </div>
+        <div class="col-4">
+             <div class="dropdown">
+                <button class="btn menuButton dropdown-toggle" type="button" data-toggle="dropdown">Ages
+                    <span class="caret"></span></button>
+
+                  <ul class="dropdown-menu">
+                    <li class="ages" value="all">All Ages</li>
+                    <li class="ages" value="standard">Less than 12</li>
+                    <li class="ages" value="standard">Age 12-34</li>
+                    <li class="ages" value="limited">Age 35+</li>
+                  </ul>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="dropdown menuButton">
+               <button class="btn dropdown-toggle menuButton" type="button" data-toggle="dropdown">Levels
+                   <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <div id="levelFilter">
+
+                      </div>
+                    </ul>
+            </div>
+       </div>
+       </div>
+
+           <div class="row">
+               <div class="col-md-6">
+                 <form>
+                   <div class="form-group">
+                   <div class="scroll-area" id="SkillArea">
+                     <div class="modal fade" id="delModal" role="dialog">
+                       <div class="modal-dialog">
+                         <div class="modal-content">
+                           <div class="modal-header">
+                             <h4 class="modal-title" id="deleteModalLabel"></h4>
+                           </div>
+                           <div class="modal-body">
+                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                             <button type="button" class="btn btn-default" id="confirmDelete">Confirm</button>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+
+                        </div>
+                      </div>
+                      </form>
+                      </div>
+
+
+            <div class="col-md-6 visibleLarge">
+                <div class="scroll-area visibleLarge">
+                    <div class="skillCard card visibleLarge">
+                        <div class="card-body">
+                            <h4 class="card-title" id="cardTitle">Rail Walking</h4>
+                            <p class="card-text" id="cardText">The student must walk 20' on a rail.</p>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" id="cardVideo" src="https://www.youtube.com/embed/kaf836Tp5xw" allowfullscreen></iframe>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+
+    <script>
+
+    $(document).ready(function() {
+
+      $.ajax({
+              url: '/app/{{skilltype}}/search',
+              async: false,
+	      dataType: 'json',
+              success: function(json) {
+                  //alert(JSON.stringify(json.results));
+                  jsonData = json.results;
+              }
+          });
+
+      createSkillArea(tech);
+      populate(tech, age, lev);
+      levelDrop();
+      skillDrop();
+      levelFilter();
+
+      $(".levels").click(function() {
+        lev=$(this).attr("value");
+        createSkillArea(tech);
+        populate(tech,age,lev);
+      });
+      $(".techniques").click(function() {
+        tech=$(this).attr("value");
+        createSkillArea(tech);
+        populate(tech,age,lev);
+      });
+
+    $(".ages").click(function() {
+        age= $(this).attr("value");
+        createSkillArea(tech);
+        populate(tech,age,lev);
+        //filter results by age
+    });
+
+      $(".skillContainer").click(function() {
+        var skillID = $(this).attr("id");
+        changeCard(skillID);
+      });
+
+    });
+    </script>
+
+
+    <div class="footer">
+        <p>Contact us at helpdesk@urbanevo.com</p>
+    </div>
+    <div class="container-fluid skillHeader">
+      <br />
+      <script>
+window.intercomSettings = {
+app_id: "hyldxpu0"
+};
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/hyldxpu0';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+
+</div>
+
+    </body>
+</html>

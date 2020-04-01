@@ -1,0 +1,99 @@
+<html><head>
+	<meta charset="utf-8">
+	<title>UrbanEvo add skill</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="UE_Style.css">
+	</head>
+</head>
+
+<body style="background-color: hsla(0, 60%, 40%, 0.7);">
+	<div class="container-fluid">
+		<div class="row" style="position:relative margin:0 auto">
+			<div class="col-1 col-md-2 col-lg-3"></div>
+			<div class="col-10 col-md-8 col-lg-6 bgWhite formScroll" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)">
+
+				<a href="UrbanEvo.html"><img class="img-responsive centered" src="MainIcons/logo.png"></a>
+				<h3>Add a Skill</h3>
+				<form action="/form/parkour/f5a7983d-40a6-437e-9f43-76e8f6a9a44f" method="post" enctype="multipart/form-data" class="jsonform-hasrequired">
+					<div>
+						<div class="form-group jsonform-error-area jsonform-required">
+							<label for="jsonform-1-elt-area">Skill Area</label>
+							<div class="controls">
+								<select name="area" id="jsonform-1-elt-area" class="form-control" required="required">
+									<option value="Rails">Rails</option>
+									<option value="Walls">Walls</option>
+									<option value="Vaults">Vaults</option>
+									<option selected="" value="Other">Other</option>
+								</select>
+								<span class="help-block jsonform-errortext" style="display:none;"></span>
+							</div>
+						</div>
+						<div class="form-group jsonform-error-name jsonform-required">
+							<label for="jsonform-1-elt-name">Skill Name</label>
+							<div class="controls">
+								<input class="form-control" name="name" value="hand stand" id="jsonform-1-elt-name" required="required" type="text">
+								<span class="help-block jsonform-errortext" style="display:none;"></span>
+							</div>
+						</div>
+						<div class="form-group jsonform-error-description">
+							<label for="jsonform-1-elt-description">Description</label>
+							<div class="controls">
+								<textarea id="jsonform-1-elt-description" name="description" style="height:150px;width:100%;">hand stand?</textarea>
+								<span class="help-block jsonform-errortext" style="display:none;"></span>
+							</div>
+						</div>
+						<div class="form-group jsonform-error-skillicon">
+							<label for="jsonform-1-elt-skillicon">Skill Icon For Small Displays</label>
+							<div class="controls">
+								<input class="input-file" id="jsonform-1-elt-skillicon" name="skillicon" type="file">
+								<span class="help-block jsonform-errortext" style="display:none;"></span>
+							</div>
+						</div>
+						<div class="form-group jsonform-error-skillimage">
+							<label for="jsonform-1-elt-skillimage">Skill Image</label>
+							<div class="controls">
+								<input class="input-file" id="jsonform-1-elt-skillimage" name="skillimage" type="file">
+								<span class="help-block jsonform-errortext" style="display:none;"></span>
+							</div>
+						</div>
+			<div class="form-group jsonform-error-skillvideourl">
+				<label for="jsonform-1-elt-skillvideourl">Link to Skill video</label>
+				<div class="controls">
+					<input class="form-control" name="skillvideourl" value="https://www.w3schools.com/default.asp" id="jsonform-1-elt-skillvideourl" type="url">
+					<span class="help-block jsonform-errortext" style="display:none;"></span>
+				</div>
+			</div>
+			<div class="">
+				<input class="btn btn-primary " value="Submit" type="submit"></div></div></form>
+			</div>
+		</div>
+	</div>
+</div>
+	<div id="res" class="alert"></div>
+	<script type="text/javascript" src="/static/deps/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/deps/underscore.js"></script>
+	<script type="text/javascript" src="/static/deps/opt/jsv.js"></script>
+	<script type="text/javascript" src="/static/lib/jsonform.js"></script>
+	<script type="text/javascript">
+		var schemaval =
+		$('form').jsonForm({
+			schema: {'skillimage': {'type': 'object', 'title': 'Skill Image'}, 'area': {'default': 'Parkour', 'enum': ['Rails', 'Walls', 'Vaults', 'Other'], 'type': 'string', 'title': 'Skill Area', 'required': 'true'}, 'name': {'type': 'string', 'title': 'Skill Name', 'required': 'true'}, 'skillvideourl': {'type': 'string', 'title': 'Link to Skill video'}, 'skillicon': {'type': 'object', 'title': 'Skill Icon For Small Displays'}, 'description': {'type': 'string', 'title': 'Description'}},
+                        form:['area', 'name', {'type': 'textarea', 'key': 'description'}, {'type': 'file', 'key': 'skillicon'}, {'type': 'file', 'key': 'skillimage'}, {'type': 'url', 'key': 'skillvideourl'}, {'items': [{'type': 'submit', 'title': 'Submit'}], 'type': 'actions'}],
+			value:{'skillimage': '/static/uploads/maga.jpg', 'area': 'Other', 'name': 'hand stand', 'skillvideourl': 'https://www.w3schools.com/default.asp', 'skillicon': '/static/uploads/drawing.svg', 'description': 'hand stand?'},
+			onSubmit: function (errors, values) {
+				alert(bob);
+				if (errors) {
+					$('#res').html('<p>I beg your pardon?</p>');
+				} else {
+					alert("bob");
+				}
+			}
+		});
+	</script>
+
+
+</body></html>

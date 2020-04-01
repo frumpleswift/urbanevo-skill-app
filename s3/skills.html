@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Urban Evolution Parkour</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.496.0.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/UE_Style.css">
+  <script src="js/skillapp.js"></script>
+  <script src="js/skill-app-auth.js"></script>
+
+  <script>
+    var skillData = {}
+    var skill = getUrlParameter("skill");
+    var theDefault = getUrlParameter("default");
+    var timerid;
+
+    function createSkillArea(element, skills) {
+      var myNode = document.getElementById("SkillArea");
+      while (myNode.lastChild) {
+        myNode.removeChild(myNode.lastChild);
+      };
+      for (var i = 0; i < skills.length; i++) {
+
+        if ((element == "all") || (skills[i].id == element)) {
+
+          itemID = skills[i].id;
+          itemName = skills[i].name;
+          addme = '<h4><i><b>' + itemName + '</b></i></h4>' +
+            '<div class="panel-group" id=' + itemID + '></div>'
+          $("#SkillArea").append(addme);
+        };
+      };
+      if (is_admin()) {
+        $("#SkillArea").append('<a class="nav-link" href="/edit.html?area=' + skill + '">Add a new skill</a>');
+      }
+    };
+
+    function appendLov(id, targetid, label, clear = false) {
+
+      $("#" + id).append('<a class="dropdown-item" href="#' + targetid + '">' + label + '</a>');
+
+    }
+
+    function paintSkill(skill) {
+      var panelID = "panel" + skill.guid;
+      var collapseID = "collapse" + skill.guid;
+      var hrefCol = "#" + collapseID;
+      chk = false;
+      addme = '<div class="panel panel-default" id="' + panelID + '">' +
+        '<div class="panel-heading">' +
+        '<p class="panel-title">' +
+        '<a data-toggle="collapse" href=' + hrefCol + '>' +
+        '<div class="container-fluid ">' +
+        '<span class="skillContainer" id=' + skill.guid + '>' +
+        '<div class="skill"><img class="skillImage" src=' + skill.record_data.image_url + '>&emsp;</div>' +
+        '<div class="skill">' + skill.record_data.name + '</div>' +
+        '</span>';
+
+      if (get_auth_token()) {
+        addme += '&nbsp;<img class="skillcheck" check="false" id="' + skill.guid + '" src="img/icons/unchecked.png" width="8%" height="8%"/>&nbsp;';
+      }
+
+      if (is_admin()) {
+        addme += '<div class="skill">&nbsp;<img class="edit" id="' + skill.guid + '" src="img/icons/edit.png" width="50%" height="50%" />&nbsp;</div>' +
+          '<div class="skill">&nbsp;<img class="delete" id="' + skill.guid + '" src="img/icons/trash.png" width="50%" height="50%" />&nbsp;</div>';
+      }
+      addme += '</div>' +
+        '</a>' +
+        '</p>' +
+        '</div>' +
+        '<div id=' + collapseID + ' class="panel-collapse collapse in visibleSmall">' +
+        '<div class="panel-body">' +
+        '<p>' + skill.record_data.description + '</p>' +
+        '<div class="embed-responsive embed-responsive-16by9">' +
+        '<iframe class="embed-responsive-item" src=' + skill.record_data.video + ' allowfullscreen></iframe>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+      $("#" + skill.record_data.area).append(addme);
+      $(".skillContainer").off("click").click(function() {
+        var skillID = $(this).attr("id");
+        changeCard(skillID);
+      });
+
+      if (get_auth_token()) {
+        $(".skillcheck").off("click").click(function() {
+            console.log($(this).attr("id"));
+            if ($(this).attr("check")=="false") {
+              $(this).attr("src","img/icons/checked.png");
+              $(this).attr("check",$(this).attr("id"));
+            } else {
+              $(this).attr("check","false");
+              $(this).attr("src","img/icons/unchecked.png");
+            }
+            $(this).attr("crudtime",Date.now());
+            window.clearTimeout(timerid);
+            timerid = window.setTimeout(checkSkills,3000);
+
+        });
+      }
+
+      if (is_admin()) {
+        $(".edit").off("click").click(function() {
+          var skillID = $(this).attr("id");
+          window.location.replace("/edit.html?area=" + getUrlParameter("skill") + "&guid=" + skillID);
+        });
+        $(".delete").off("click").click(function() {
+          var skillID = $(this).attr("id");
+          if (confirm("Delete Skill?")) {
+            deleteSkill(getUrlParameter("skill"), skillID).done(function() {
+              $("#panel" + skillID).remove();
+            })
+          };
+        });
+      }
+      if (skill.guid == theDefault) {
+        changeCard(skill.guid);
+      }
+    }
+
+    function changeCard(skillID) {
+      $("#cardTitle").text(skillData[skillID].record_data.name);
+      $("#cardSubtitle").text(skillData[skillID].record_data.level);
+      $("#cardText").text(skillData[skillID].record_data.description);
+      $("#cardVideo").attr('src', skillData[skillID].record_data.video);
+    };
+
+    var skills = [];
+
+    getSkillSchema(skill).done(function(schemaData) {
+
+      //console.log(JSON.stringify(schemaData));
+      //console.log(JSON.stringify(schemaData.display.labels));
+      skills = schemaData.display.labels.area;
+      levels = schemaData.display.labels.level;
+      createSkillArea("all", skills)
+
+      for (i = 0; i < skills.length; i++) {
+        appendLov("skillDropList", skills[i].id, skills[i].name);
+      }
+
+      for (i = 0; i < levels.length; i++) {
+        appendLov("levelDropList", levels[i].id, levels[i].name);
+      }
+
+      getSkills(skill).done(function(data) {
+        for (i = 0; i < data.length; i++) {
+          getSkill(skill, data[i]).done(function(data) {
+            //console.log(data);
+            skillData[data.guid] = data;
+            paintSkill(data)
+          });
+        }
+
+        //add checked skills for logged in users here
+        if (get_auth_token()) {
+
+          getCheckedSkills(skill,get_user_id()).done(function(data) {
+
+            console.log(data);
+            if (data.skill_data) {
+              //console.log(data.skill_data);
+              for (checkedSkill in data.skill_data) {
+                theskill = $(".skillcheck[id='"+ checkedSkill +"']");
+                theskill.attr("check",checkedSkill);
+                theskill.attr("src","img/icons/checked.png");
+                theskill.attr("crudtime",data.skill_data[checkedSkill]);
+
+
+              }
+            }
+
+          });
+
+        }
+
+      });
+    });
+
+    function checkSkills() {
+
+      var checkedList={};
+
+      $(".skillcheck").each(function (index) {
+        if ($(this).attr("check") != "false") {
+          checkedList[$(this).attr("check")] = $(this).attr("crudtime");
+        }
+      });
+
+      putCheckedSkills(skill,get_user_id(),checkedList)
+
+      console.log(checkedList);
+
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="navbar navbar-expand-sm bg-white navbar-light fixed-top bgOffWhite">
+        <a href="index.html"><img class="navImg img-responsive" src="img/icons/logo.png"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link dropdown-toggle " href="#" id="skillLevelDrop" data-toggle="dropdown">Skill Level</a>
+              <div class="dropdown-menu" role="menu" id="levelDropList" aria-labeledby="skillLevelDrop">
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link dropdown-toggle" href="#" id="skillTypeDrop" data-toggle="dropdown">Skill Type</a>
+              <div class="dropdown-menu" role="menu" id="skillDropList" aria-labeledby="skillTypeDrop">
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="loginlink">Login</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="container-fluid skillHeader">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="scroll-area" id="SkillArea">
+
+        </div>
+      </div>
+
+      <div class="col-sm-7 visibleLarge">
+        <div class="scroll-area visibleLarge">
+          <div class="skillCard card visibleLarge">
+            <div class="card-body">
+              <h4 class="card-title" id="cardTitle"></h4>
+              <h6 class="card-subtitle text-muted" id="cardSubtitle"></h6>
+              <br>
+              <p class="card-text" id="cardText"></p>
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" id="cardVideo" src="empty.html" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Contact us at helpdesk@urbanevo.com</p>
+  </div>
+
+</body>
+
+</html>

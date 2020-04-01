@@ -1,0 +1,18 @@
+    try:
+        
+        groups = event['requestContext']['authorizer']['claims']['cognito:groups']
+        
+        if os.environ['AUTH_GROUP'] not in groups:
+            return {
+                'statusCode': 401,
+                'headers': {'Access-Control-Allow-Origin': '*'},
+                'body': '{"error":"access denied"}'
+            }
+    except Exception as exc:
+        print(exc)
+        return {
+                'statusCode': 401,
+                'headers': {'Access-Control-Allow-Origin': '*'},
+                'body': '{"error":"error retrieving authentication context"}'
+            }
+        

@@ -1,0 +1,116 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>UrbanEvo add skill</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/UE_Style.css">
+
+	<script src="jsonform/deps/opt/ZSchema-browser.js"></script>
+	<script src="jsonform/deps/opt/jquery.ui.core.js"></script>
+	<script src="jsonform/deps/opt/jquery.ui.widget.js"></script>
+	<script src="jsonform/deps/opt/jquery.ui.mouse.js"></script>
+	<script src="jsonform/deps/opt/jquery.ui.sortable.js"></script>
+	<script src="jsonform/deps/opt/jquery.ui.custom.js"></script>
+	<script src="jsonform/deps/opt/bootstrap-dropdown.js"></script>
+	<script src="jsonform/deps/opt/bootstrap-typeahead.js"></script>
+	<script src="jsonform/deps/opt/bootstrap-tagsinput.min.js"></script>
+	<script src="jsonform/deps/opt/spectrum.js"></script>
+	<script src="jsonform/deps/opt/ace/ace.js"></script>
+	<script src="jsonform/deps/opt/ace/mode-json.js"></script>
+	<script src="jsonform/deps/opt/ace/mode-html.js"></script>
+	<script src="jsonform/deps/opt/ace/mode-css.js"></script>
+	<script src="jsonform/deps/opt/ace/mode-javascript.js"></script>
+	<script src="jsonform/deps/opt/ace/mode-less.js"></script>
+	<script src="jsonform/deps/opt/ace/mode-markdown.js"></script>
+	<script src="jsonform/deps/opt/jquery.transloadit2.js"></script>
+	<script src="jsonform/deps/jquery.min.js"></script>
+	<script src="jsonform/deps/underscore.js"></script>
+	<script src="jsonform/deps/opt/jsv.js"></script>
+	<script src="jsonform/lib/jsonform.js"></script>
+	<script src="js/skillapp.js"></script>
+	<script src="js/skill-app-auth.js"></script>
+
+</head>
+</head>
+
+<body style="background-color: hsla(0, 60%, 40%, 0.7);">
+	<div class="container-fluid">
+		<div class="row" style="position:relative margin:0 auto">
+			<div class="col-1 col-md-2 col-lg-3"></div>
+			<div class="col-10 col-md-8 col-lg-6 bgWhite formScroll" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)">
+
+				<a href="UrbanEvo.html"><img class="img-responsive centered" src="img/icons/logo.png"></a>
+				<h3>Add a Skill</h3>
+				<form action="/form/parkour/f5a7983d-40a6-437e-9f43-76e8f6a9a44f" method="post" enctype="multipart/form-data" class="jsonform-hasrequired"></form>
+
+			</div>
+			<div id="res" class="alert"></div>
+			<script type="text/javascript">
+
+				var skill = getUrlParameter("area");
+				var guid = getUrlParameter("guid");
+				var skillData = {}
+				getSkill(skill, guid).done(function(result) {
+
+					if ("record_data" in result) {
+						console.log(JSON.stringify(result.record_data))
+						skillData=result.record_data;
+						skillData["thumb"]=skillData.image_url;
+					}
+
+					getSkillSchema(skill).done(function(data) {
+
+						console.log(JSON.stringify(data));
+
+						$('form').jsonForm({
+							schema: data["schema"],
+							form: data["form"],
+							value: skillData,
+							onSubmit: function(errors, values) {
+								if (errors) {
+									alert(JSON.stringify(values));
+									alert(JSON.stringify(errors));
+									return;
+								}
+								var file = document.querySelector('input[type=file]').files[0];
+								var reader = new FileReader();
+
+								reader.addEventListener("load", function() {
+									//console.log(JSON.stringify(reader.result));
+									values["upload"] = reader.result
+
+									//console.log(JSON.stringify(values));
+									saveSkill(skill, values, guid).done(function(data) {
+										console.log(JSON.stringify(data));
+										window.location.replace('/skills.html?skill=' + skill + '&default=' + data.guid);
+									});
+								}, false);
+
+								if (file) {
+									values["image_name"] = file.name;
+									reader.readAsDataURL(file);
+								} else {
+									values["image_url"]=skillData.image_url;
+									values["image_name"]=skillData.image_name;
+									//console.log(JSON.stringify(values));
+									saveSkill(skill, values, guid).done(function(data) {
+										console.log(JSON.stringify(data));
+										window.location.replace('/skills.html?skill=' + skill + '&default=' + data.guid);
+									});
+								}
+							}
+						});
+
+
+					});
+				});
+			</script>
+
+</body>
+
+</html>

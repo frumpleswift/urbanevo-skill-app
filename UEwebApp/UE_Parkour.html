@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Urban Evolution Parkour</title>
+        <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+                    <link rel="stylesheet" type="text/css" href="UE_Style.css">
+
+    <script>
+    var jsonData={
+      "rails": [
+        {"id": "railwalk", "name": "Rail Walking", "level": "Green Band Rail Skill", "thumb":"railWalk.png", "age": "all", "description": "Walk 20 feet on a rail", "video":"kaf836Tp5xw"},
+        {"id": "reverseUnderbar", "name": "Reverse Underbar", "level": "Green Band Rail Skill", "thumb": "revUnder.png", "age": "all", "description": "head height bar", "video": "ME4mqekXRgM"},
+        {"id": "sloth", "name": "Sloth Traverse", "level": "Green Band Rail Skill", "thumb": "SlothTraverse.png", "age": "all", "description": "traverse 20'", "video":"81mJtXn2TW0"},
+        {"id": "railPre", "name": "Rail Precision Jump", "level": "Green Band Rail Skill", "thumb": "", "age": "young", "description": "Jump from one rail to another 5' away", "video": "tk6ykrl-z1A"}
+      ],
+      "vaults": [
+        {"id": "easy", "name": "Easy Vault","level": "Green Band Vault Skill",  "thumb": "Easy.png", "age": "all", "description": "Examinee chooses box height", "video": "_wNZywgG3Lg"},
+        {"id": "lazy", "name": "Lazy Vault", "level": "Green Band Vault Skill", "thumb": "Lazy.png", "age": "all", "description": "Examinee chooses box height. Testers choose exit angle", "video":"p99LYXh8nS0"},
+        {"id": "speed", "name": "Speed Vault", "level": "Green Band Vault Skill", "thumb": "Speed.png", "age": "all", "description": "Examinee chooses box height", "video": "QBie87x3-pI"},
+        {"id": "pop", "name": "Pop Vault", "level": "Green Band Vault Skill", "thumb": "", "age": "all", "description": "4 foot high box", "video": "P1cYi7JJt6w"},
+        {"id": "kong", "name": "Kong Vault", "level": "Green Band Vault Skill", "thumb": "Kong.png", "age": "young", "description": "Examinee chooses box height", "video": "PCBTOz2q5Ls"}
+
+      ]
+    };
+    var skills = [{"id": "rails", "name": "Rail Techniques", "default": "rails_sm.png"}, {"id": "vaults", "name": "Vault Techniques", "default": "vault_sm.png"},{"id": "walls", "name": "Wall Techniques", "default": "walls_sm.png"}]
+
+    keys=Object.keys(jsonData);
+
+    var checks={"railwalk": "checked", "sloth": "checked"};
+
+    function createSkillArea(element){
+      var myNode = document.getElementById("SkillArea");
+      while (myNode.lastChild) {
+        myNode.removeChild(myNode.lastChild);
+        };
+        for (var i=0; i < skills.length; i++) {
+
+          if ((element=="all") || (skills[i].id == element)) {
+
+            itemID = skills[i].id;
+            itemName = skills[i].name;
+            addme = '<h4><i><b>' + itemName + '</b></i></h4>'
+            + '<div class="panel-group" id='+ itemID +'></div>'
+            $("#SkillArea").append(addme);
+          };
+        };
+      };
+
+    function populate(element) {
+      for (var j=0; j<skills.length; j++){
+        selected = skills[j].id;
+        items = jsonData[selected];
+
+        if ((element != "all") && (element != skills[j].id))
+        {
+          items = [];
+        }
+      if (items != undefined) {
+        for (var i=0; i< items.length; i++) {
+          var ithumb="SkillIcons/" + items[i].thumb;
+          if (items[i].thumb == "") {
+            ithumb="MainIcons/" + skills[j].default;
+          }
+          var collapseID = "collapse" + items[i].id;
+          var hrefCol="#" + collapseID;
+          var vidEmbed = "https://www.youtube.com/embed/" + items[i].video;
+          var chk=checks[items[i].id];
+          addme = '<div class="panel panel-default">'
+            + '<div class="panel-heading">'
+              + '<p class="panel-title">'
+              + '<a data-toggle="collapse" href=' + hrefCol + '>'
+                + '<div class="container-fluid skillContainer" id=' + items[i].id + '>'
+                + '<div class="skill"><input type="checkbox" ' + chk +'>&ensp;</div>'
+                    + '<div class="skill"><img class="skillImage" src=' + ithumb +'>&emsp;</div>'
+                    + '<div class="skill">' + items[i].name + '</div>'
+                    + '</div>'
+                    +'</a>'
+                    +'</p>'
+            +'</div>'
+          + '<div id=' + collapseID + ' class="panel-collapse collapse in visibleSmall">'
+              + '<div class="panel-body">'
+                +'<p>' +items[i].description + '</p>'
+                + '<div class="embed-responsive embed-responsive-16by9">'
+                    + '<iframe class="embed-responsive-item" src=' + vidEmbed + ' allowfullscreen></iframe>'
+                +'</div>'
+              +'</div>'
+            +'</div>'
+          +'</div>'
+          $("#" + selected).append(addme);
+      };
+
+
+    };
+
+
+  };
+
+  $(".skillContainer").click(function() {
+    var skillID = $(this).attr("id");
+    changeCard(skillID);
+  });
+
+    };
+
+    function changeCard(skillID){
+      for (var i=0; i<skills.length;i++) {
+        items = jsonData[skills[i].id];
+        for (var j=0; j<items.length; j++) {
+          if (items[j].id == skillID) {
+            itemDesc = items[j].description;
+            itemVid = "https://www.youtube.com/embed/"+items[j].video;
+            itemTitle= items[j].name;
+            itemLevel=items[j].level;
+          $("#cardTitle").text(itemTitle);
+          $("#cardSubtitle").text(itemLevel);
+          $("#cardText").text(itemDesc);
+          $("#cardVideo").attr('src', itemVid);
+        };
+      };
+    };
+  };
+    </script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+            <nav class="navbar navbar-expand-sm bg-white navbar-light fixed-top bgOffWhite">
+                <a href="UrbanEvo.html"><img class="navImg img-responsive" src="MainIcons/logo.png"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav">
+                        <li class ="nav-item">
+                            <a class="nav-link" href="#">About Parkour</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Level Up</a>
+                                <br>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" style="color:green !important" href="#">Green Band Ages 9-35</a>
+                                <a class="dropdown-item" style="color:green !important" href="#">Green Band Ages 35+</a>
+                                <a class="dropdown-item navRed" href="#">Red Band Ages 12-35</a>
+                                <a class="dropdown-item navRed" href="#">Red Band Ages 9-12 and 35+</a>
+                                <a class="dropdown-item" style="color:black !important" href="#">Black Band</a>
+
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Schedules</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="login.html">Login</a>
+                    </ul>
+                </div>
+            </nav>
+            </div>
+          </div>
+          <div class="container-fluid skillHeader">
+            <div class="row" style="margin-left: -25px">
+               <div class="col-4">
+                 <div class="dropdown">
+                   <button class="btn btn-default dropdown-toggle bandImage bgOffWhite" type="button" id="greenband" data-toggle="dropdown">
+                     <img src="MainIcons/greenband-300x86.png" class="bandImage img-responsive">
+                   </button>
+                   <ul class="dropdown-menu" role="menu" aria-labelledby="greenband">
+                     <li>
+                       <div class="skill fakeCheck"></div>
+                       <p class="skill">3/3 months</p>
+                   </li>
+                   <li>
+                     <div class="skill fakeX"></div>
+                     <p class="skill">18/30 White Band</p>
+                 </li>
+                 <li>
+                   <div class="skill fakeX"></div>
+                   <p class="skill">4/10 Veggies</p>
+               </li>
+             </ul>
+           </div>
+         </div>
+         <div class="col-4">
+             <select id="techniques">
+                 <option value="all">All Techniques</option>
+                 <option value="strength">Strength and Conditioning</option>
+                 <option value="vaults">Vaults</option>
+                 <option value="walls">Walls</option>
+                 <option value="rails">Rails</option>
+                 <option value="misc">Miscellaneous</option>
+               </select>
+             </div>
+             <div class="col-4">
+                 <select id="ages">
+                     <option value="middle">Ages 12-34</option>
+                     <option value="young">Age 12-</option>
+                     <option value="old">Age 35+</option>
+                   </select>
+                 </div>
+       </div>
+
+           <div class="row">
+               <div class="col-md-5">
+                   <div class="scroll-area" id="SkillArea">
+
+                        </div>
+                      </div>
+
+
+            <div class="col-sm-7 visibleLarge">
+                <div class="scroll-area visibleLarge">
+                    <div class="skillCard card visibleLarge">
+                        <div class="card-body">
+                            <h4 class="card-title" id="cardTitle">Rail Walking</h4>
+                            <h6 class="card-subtitle text-muted" id="cardSubtitle">Green Band Rail Skill</h6>
+                            <br>
+                            <p class="card-text" id="cardText">The student must walk 20' on a rail.</p>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" id="cardVideo" src="https://www.youtube.com/embed/kaf836Tp5xw" allowfullscreen></iframe>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+
+      //createSkillArea("rails");
+      //populate("rails");
+      //createSkillArea("vaults");
+      //populate("vaults");
+      createSkillArea("all");
+      populate("all");
+
+      $("#techniques").on("change", function() {
+        tech=this.value;
+        alert(tech);
+        createSkillArea(tech);
+        populate(tech);
+      });
+
+
+
+      $(".skillContainer").click(function() {
+        var skillID = $(this).attr("id");
+        changeCard(skillID);
+      });
+
+    });
+    </script>
+
+
+    <div class="footer">
+        <p>Contact us at helpdesk@urbanevo.com</p>
+    </div>
+
+    </body>
+</html>

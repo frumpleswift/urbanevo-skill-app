@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Urban Evolution Parkour</title>
+        <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+                    <link rel="stylesheet" type="text/css" href="UE_Style.css">
+
+    </head>
+    <body>
+      <div class="container-fluid">
+          <div class="row">
+          <nav class="navbar navbar-expand-sm bg-white navbar-light fixed-top bgOffWhite">
+              <a href="UrbanEvo.html"><img class="navImg img-responsive" src="MainIcons/logo.png"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                  <ul class="navbar-nav">
+                      <li class="nav-item">
+                          <a class="nav-link navRed" href="#">About Us</a>
+                      </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle navRed" href="#" id="navbardrop" data-toggle="dropdown">Classes</a>
+                          <div class="dropdown-menu">
+                              <a class="dropdown-item" href=UE_Parkour.html>Parkour</a>
+                              <a class="dropdown-item" href="#">Aerial Silks</a>
+                              <a class="dropdown-item" href="#">Adult Gymnastics</a>
+                          </div>
+                      </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle navRed" href="#" id="scheduleDrop" data-toggle="dropdown">Schedules</a>
+                          <div class="dropdown-menu">
+                              <a class="dropdown-item" href = "#">Alexandria, VA</a>
+                              <a class="dropdown-item" href="#">Sterling, VA</a>
+                          </div>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link navRed" href="#">Parties</a>
+                      </li>
+
+                  </ul>
+              </div>
+          </nav>
+          </div>
+          </div>
+          <div class="container-fluid skillHeader">
+          {% block body %}
+          {% if session['logged_in'] %}
+          <p>You're logged in already!</p>
+          {% else %}
+
+
+          <form action="/login" method="POST">
+        <div class="login">
+                <div class="login-screen">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-2 col-md-3 col-lg-4"></div>
+                      <div class="col-8 col-md-6 col-lg-4 login bgWhite">
+                        <div class="app-title">
+                          <h1 class="navRed">Login</h1>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2 col-md-3 col-lg-4"></div>
+                          <div class="col-8 col-md-6 col-lg-4 login bgWhite">
+                              <div class="login-form">
+                                <div class="control-group">
+                                  <input type="text" class="login-field" value="" placeholder="username" name="username" style="width:100%">
+                                  <label class="login-field-icon fui-user" for="login-name"></label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                            <div class="row">
+                              <div class="col-2 col-md-3 col-lg-4"></div>
+                              <div class="col-8 col-md-6 col-lg-4 login">
+                                <div class="control-group">
+                                <input type="password" class="login-field" value="" placeholder="password" name="password" style="width:100%">
+                                <label class="login-field-icon fui-lock" for="login-pass"></label>
+                                </div>
+                              </div>
+                            </div>
+                          <div class="row">
+                            <div class="col-2 col-md-3 col-lg-4"></div>
+                              <div class="col-8 col-md-6 col-lg-4 login">
+                                <input type="submit" value="Log in" class="btn btn-large btn-block buttonLogin" >
+                              </div>
+                            </div>
+
+                            <div class="row" style="margin-top:20px">
+                              <div class="col-2 col-md-3 col-lg-4"></div>
+                              <div class="col-8 col-md-6 col-lg-4 login text-center">
+                                <h4> Don't have an account?  </h4>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-2 col-md-3 col-lg-4"></div>
+                              <div class="col-8 col-md-6 col-lg-4 login">
+                                <div><a href="/register" class="btn btn-block buttonLogin">Register a New Account</a></div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-2 col-md-3 col-lg-4"></div>
+                              <div class="col-8 col-md-6 col-lg-4 text-center">
+                                <h4>or</h4>
+                              </div>
+                            </div>
+
+                          <div class="row">
+                            <div class="col-3 col-md-4"></div>
+                            <div class="col-6 col-md-4">
+                              <div><a href="/glogin"><img class="img-responsive" src="MainIcons/google.png" style="width:100%"></a></div>
+                            </div>
+                          </div>
+
+                        </div>
+                </div>
+        </div>
+
+</form>
+</div>
+
+{% endif %}
+{% endblock %}
+<div class="footer">
+    <p>Contact us at helpdesk@urbanevo.com</p>
+</div>
+</body>
